@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hostara | Desarrollo Web Profesional</title>
+    <meta name="description" content="Desarrollo web moderno, rápido y optimizado para vender. Landing pages y sitios corporativos.">
+    
+    <link rel="icon" href="codigo.png" type="image/png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+/* ---------------- VARIABLES ESTILO BOCA ---------------- */
+:root {
+    --bg: #020612; 
+    --text: #ffffff;
+    --text-muted: #94a3b8;
+    --primary: #0045cb; 
+    --primary-light: #2962ff;
+    --primary-glow: rgba(0, 69, 203, 0.6);
+    --secondary: #fcb000; 
+    --secondary-glow: rgba(252, 176, 0, 0.4);
+    --glass: rgba(10, 25, 60, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --danger: #ef4444; 
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+body {
+    background: var(--bg);
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.5;
+}
+
+/* ---------------- SCROLLBAR ---------------- */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 5px;
+    border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--secondary); }
+html { scrollbar-width: thin; scrollbar-color: var(--primary) var(--bg); }
+
+/* ---------------- BACKGROUND ---------------- */
+.ambient-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.blob { position: absolute; filter: blur(90px); opacity: .4; border-radius: 50%; animation: float 10s infinite ease-in-out alternate; }
+.blob-1 { top:-10%; left:-10%; width:50vw; height:50vw; background:var(--primary); }
+.blob-2 { bottom:-10%; right:-10%; width:50vw; height:50vw; background:var(--secondary); animation-delay: -5s; opacity: 0.25; }
+@keyframes float { 0%{ transform:translate(0,0) scale(1);} 100%{ transform:translate(40px,60px) scale(1.1);} }
+
+/* ---------------- UTILIDADES ---------------- */
+.container { max-width:1200px; margin:auto; padding:0 2rem; }
+.section-title { text-align:center; font-size:clamp(2rem,5vw,3rem); font-weight:800; margin-bottom:1rem; line-height: 1.2; }
+.section-subtitle { text-align:center; color:var(--text-muted); margin-bottom:3rem; font-size: 1.1rem; }
+
+/* --- BOTONES --- */
+.btn {
+    padding: 0.8rem 2rem; 
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+    vertical-align: middle;
+    height: 48px;
+    line-height: 1;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--secondary);
+    color: var(--secondary);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, #002875 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 20px var(--primary-glow);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--secondary) 0%, #d49500 100%);
+    color: #000;
+    box-shadow: 0 0 30px var(--secondary-glow);
+    transform: translateY(-3px) scale(1.02);
+    border-color: transparent;
+}
+
+.hero-buttons {
+    display: flex; gap: 1rem; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 2rem;
+}
+
+/* --- BOTONES FLOTANTES --- */
+.whatsapp-btn, .scroll-top-btn {
+    position:fixed; bottom:25px; z-index: 100;
+    width: 50px; height: 50px; border-radius:50%; color:white;
+    display:flex; justify-content:center; align-items:center;
+    text-decoration: none; transition: 0.3s; cursor: pointer; border: none;
+}
+
+.whatsapp-btn {
+    right: 25px;
+    background: #25d366;
+    box-shadow: 0 0 20px #25d36660;
+}
+.whatsapp-btn:hover { transform: scale(1.1); }
+.whatsapp-icon { width: 30px; height: 30px; fill: white; }
+
+.scroll-top-btn {
+    left: 25px;
+    background: var(--primary); 
+    border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(5px);
+    opacity: 0; 
+    pointer-events: none;
+    transform: translateY(20px);
+    box-shadow: 0 0 15px var(--primary-glow);
+}
+.scroll-top-btn.visible {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+}
+.scroll-top-btn:hover { background: var(--secondary); color: black; transform: translateY(-5px); }
+
+/* ---------------- HERO ---------------- */
+header { 
+    min-height: 75vh; display: flex; justify-content: center; align-items: center; text-align: center; padding: 4rem 0; 
+}
+.hero-content h1 { font-size:clamp(3.5rem,8vw,6rem); font-weight:800; margin-bottom:1.5rem; line-height: 1.1; letter-spacing: -2px; }
+.hero-content h1 span {
+    color: var(--secondary);
+    background: none;
+    -webkit-text-fill-color: initial;
+    text-shadow: 0 0 30px var(--secondary-glow);
+}
+.hero-content p { max-width:620px; margin:0 auto 2.5rem; color:var(--text-muted); font-size: 1.2rem; }
+
+/* ---------------- PROYECTOS ---------------- */
+.project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+.project-card {
+    background: var(--glass); border: 1px solid var(--glass-border); border-radius: 16px;
+    overflow: hidden; transition: 0.3s; display: flex; flex-direction: column; cursor: pointer;
+}
+.project-image {
+    width: 100%; aspect-ratio: 16/9; position: relative; overflow: hidden; border-bottom: 1px solid var(--glass-border);
+}
+.project-image img { width: 100%; height: 100%; object-fit: cover; transition: 0.4s ease; }
+.project-image::after {
+    content: "VER DEMO"; position: absolute; inset: 0;
+    background: rgba(0, 69, 203, 0.85);
+    color: var(--secondary);
+    font-weight: 800; letter-spacing: 1px;
+    display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s;
+    font-size: 1.1rem; pointer-events: none;
+}
+.project-card:hover { transform: translateY(-5px); border-color: var(--secondary); }
+.project-card:hover .project-image::after { opacity: 1; }
+.project-card:hover .project-image img { transform: scale(1.05); }
+.project-info { padding: 1.2rem; background: rgba(0, 5, 20, 0.4); text-align: left; }
+.project-info h3 { font-size: 1.2rem; margin-bottom: 0.2rem; color: white; line-height: 1.2; }
+.project-info span { color: var(--secondary); font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 5px; }
+.project-info span::before { content: "🔗"; font-size: 0.8rem; }
+.alert-note {
+    background: rgba(0, 69, 203, 0.1); padding: 1rem; border-radius: 12px; border: 1px solid var(--primary);
+    margin-bottom: 3rem; text-align: center; color: var(--secondary); font-weight: 600;
+}
+
+/* ---------------- MODAL ---------------- */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.9); display: none; justify-content: center; align-items: center;
+    z-index: 999; padding: 20px;
+}
+.modal-content {
+    background: var(--bg); width: 95%; max-width: 1400px; height: 95%;
+    border-radius: 12px; overflow: hidden; position: relative;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.7); display: flex; flex-direction: column;
+}
+.modal-header {
+    padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+    background: var(--primary);
+    border-bottom: 1px solid var(--glass-border);
+}
+.close-btn {
+    background: black; color: white; border: none; padding: 8px 15px;
+    border-radius: 8px; cursor: pointer; font-size: 1rem; transition: 0.3s;
+}
+.close-btn:hover { background: var(--secondary); color: black; }
+.modal-iframe { flex-grow: 1; width: 100%; border: none; }
+
+/* ---------------- CARDS PRECIOS ---------------- */
+section { padding: 4rem 0; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; }
+
+.card {
+    background:var(--glass); border:1px solid var(--glass-border);
+    border-radius:20px; padding: 1.8rem;
+    backdrop-filter:blur(10px);
+    transition:.4s; position:relative; display: flex; flex-direction: column;
+    justify-content: space-between;
+}
+.card:hover {
+    transform:translateY(-8px); border-color: var(--secondary);
+    box-shadow:0 10px 30px rgba(252, 176, 0, 0.15);
+}
+.card h3 { font-size: 1.3rem; color: white; margin-bottom: 0.3rem; }
+.card > p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; height: 35px; line-height: 1.3; }
+
+.old-price {
+    text-decoration: line-through; color: var(--text-muted); font-size: 0.85rem;
+    margin-bottom: -5px; display: block;
+}
+.price-container {
+    display: flex; align-items: flex-start; gap: 4px; margin: 0.5rem 0 0.5rem 0;
+}
+.currency { font-size: 1.1rem; font-weight: 600; margin-top: 6px; color: var(--secondary); }
+.big-number { font-size: 2.8rem; font-weight: 800; line-height: 1; color: white; }
+.period-container { display: flex; flex-direction: column; justify-content: center; margin-top: 5px; }
+.period { font-size: 0.9rem; color: var(--text-muted); font-weight: 400; }
+
+.maintenance-fee {
+    font-size: 0.85rem; color: var(--secondary); font-weight: 600;
+    margin-bottom: 1rem; display: flex; align-items: center; gap: 5px;
+}
+.maintenance-fee::before { content: "+"; }
+
+.promo-badge {
+    position: absolute; top: 15px; right: 15px;
+    background: var(--secondary); color: #000; font-weight: 800; font-size: 0.7rem;
+    padding: 3px 10px; border-radius: 20px; text-transform: uppercase;
+    box-shadow: 0 4px 10px var(--secondary-glow);
+}
+
+.features { list-style: none; margin-bottom: 1.5rem; flex-grow: 1; text-align: left; }
+.features li { 
+    margin-bottom: 0.5rem; color: #e2e8f0; display: flex; align-items: flex-start; gap: 8px; 
+    font-size: 0.9rem; line-height: 1.3;
+}
+.features li::before { 
+    content: "✓"; color: var(--secondary); font-weight: bold; font-size: 1rem; min-width: 15px;
+}
+
+.features li.excluded { color: var(--text-muted); opacity: 0.8; }
+.features li.excluded::before { content: "✕"; color: var(--danger); }
+
+.info-precio {
+    display: block; width: 100%; font-size: 0.85em;
+    color: var(--text-muted); font-style: italic; margin-top: 0px;
+}
+
+.card.popular { 
+    border: 1px solid var(--secondary);
+    background: linear-gradient(180deg, rgba(0, 69, 203, 0.15), transparent); 
+}
+
+/* ---------------- TESTIMONIOS ---------------- */
+.testimonials { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:2rem; }
+.testimonial {
+    background:var(--glass); border-radius:20px; border:1px solid var(--glass-border);
+    padding:2rem; line-height:1.6; font-style: italic; color: #e5e7eb;
+}
+.testimonial strong { display: block; margin-top: 1rem; color: var(--secondary); font-style: normal; font-size: 0.9rem; }
+
+/* ---------------- CONTACTO (Mejorado) ---------------- */
+.contact-box {
+    background:var(--glass); border:1px solid var(--glass-border);
+    padding:2rem; border-radius:24px; max-width:700px; margin:auto;
+}
+.form-group { margin-bottom: 1rem; }
+input, textarea, select {
+    width: 100%; padding: 0.8rem; background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px;
+    color: white; font-family: inherit; font-size: 0.95rem; transition: 0.3s; outline: none;
+}
+input:focus, textarea:focus, select:focus {
+    border-color: var(--primary); background: rgba(0, 69, 203, 0.1);
+    box-shadow: 0 0 15px var(--primary-glow);
+}
+select option { background: #020612; color: white; }
+
+/* ---------------- FOOTER ---------------- */
+footer {
+    padding:2rem 0; text-align:center; border-top:1px solid var(--glass-border);
+    color:var(--text-muted); font-size:.9rem; margin-top: 2rem;
+}
+
+/* ---------------- ANIMACIONES ---------------- */
+.reveal { opacity:0; transform:translateY(60px); transition:all .8s ease-out; }
+.reveal.active { opacity:1; transform:translateY(0); }
+
+.status-msg { margin-top: 1rem; font-weight: bold; display: none; }
+.success { color: var(--secondary); }
+.error { color: var(--danger); }
+
+@media (max-width: 768px) {
+    .contact-box { padding: 1.5rem; }
+    .hero-content h1 { font-size: 3rem; }
+    .big-number { font-size: 2.5rem; }
+    .hero-buttons { flex-direction: column; width: 100%; max-width: 300px; margin: 2rem auto 0; }
+    .hero-buttons .btn { width: 100%; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="ambient-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+</div>
+
+<button onclick="scrollToTop()" id="scrollTopBtn" class="scroll-top-btn" title="Volver arriba">
+    ↑
+</button>
+
+<header>
+    <div class="container hero-content reveal">
+        <h1>Webs que <span>Venden</span></h1>
+        <p>Transformo ideas en sitios web profesionales diseñados para convertir visitantes en clientes. No solo diseño: construyo activos digitales que generan ingresos.</p>
+
+        <div class="hero-buttons">
+            <button class="btn btn-primary" onclick="consultarPlan('Asesoría General')">Quiero mi Sitio</button>
+            <a href="#precios" class="btn">Ver Precios</a>
+        </div>
+    </div>
+</header>
+
+<section id="trabajos">
+    <div class="container">
+        <h2 class="section-title reveal">Trabajos Recientes</h2>
+        <p class="section-subtitle reveal">Resultados reales para clientes reales.</p>
+        
+        <p class="alert-note reveal">
+            ¡Presiona en cualquier proyecto para ver la DEMO interactiva en pantalla completa!
+        </p>
+
+        <div class="project-grid">
+            <div class="project-card reveal" onclick="openModal('https://tabymakeup.com.ar/', 'Taby Makeup')">
+                <div class="project-image">
+                    <img src="tabymakeup.png" alt="Taby Makeup">
+                </div>
+                <div class="project-info">
+                    <h3>Taby Makeup</h3>
+                    <span>tabymakeup.com.ar</span>
+                </div>
+            </div>
+
+            <div class="project-card reveal" onclick="openModal('https://ubify.com.ar/', 'Ubify')">
+                <div class="project-image">
+                    <img src="ubify.png" alt="Ubify">
+                </div>
+                <div class="project-info">
+                    <h3>Ubify</h3>
+                    <span>ubify.com.ar</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="reveal" style="text-align: center; margin-top: 3rem;">
+            <button class="btn btn-primary" onclick="consultarPlan('Sitio Personalizado como en el Portafolio')">
+                Quiero un sitio así
+            </button>
+        </div>
+    </div>
+</section>
+
+<section id="precios">
+    <div class="container">
+        <h2 class="section-title reveal">Planes Flexibles</h2>
+        <p class="section-subtitle reveal">Financiación en 6 pagos fijos + Mantenimiento accesible.</p>
+
+        <div class="grid">
+            <div class="card reveal">
+                <h3>Landing Page</h3>
+                <p>Ideal para validar ideas o captar leads rápido.</p>
+                
+                <span class="old-price">AR$ 180.000 total</span>
+                <div class="price-container">
+                    <span class="currency">AR$</span>
+                    <span class="big-number">25.000</span>
+                    <div class="period-container">
+                        <span class="period">x 6 meses</span>
+                    </div>
+                </div>
+                
+                <div class="maintenance-fee">AR$ 10.000 /mes mantenimiento</div>
+
+                <ul class="features">
+                    <li>Diseño One-Page Moderno</li>
+                    <li>100% Adaptable (Celular/PC)</li>
+                    <li>Botón de WhatsApp + Formulario</li>
+                    <li>Enlaces a Redes Sociales</li>
+                    <li>Certificado SSL (Sitio Seguro)</li>
+                    <li>Hosting incluido en mantenimiento</li>
+                    <li>Actualizaciones técnicas</li>
+                    <li class="excluded">
+                        <div style="display:flex; flex-direction:column;">
+                            <span>Dominio .com.ar (No incluido)</span>
+                            <span class="info-precio">*Aprox. AR$ 8.500 en nic.ar</span>
+                        </div>
+                    </li>
+                </ul>
+                <button class="btn" style="text-align: center; width:100%" onclick="consultarPlan('Landing Page (6 cuotas)')">Contratar Plan</button>
+            </div>
+
+            <div class="card popular reveal">
+                <div class="promo-badge">MÁS VENDIDO</div>
+                
+                <h3>Ideal para Emprendedores</h3>
+                <p>Para negocios que necesitan nuevas teconologías.</p>
+                
+                <span class="old-price">AR$ 330.000 total</span>
+                <div class="price-container">
+                    <span class="currency">AR$</span>
+                    <span class="big-number">55.000</span>
+                    <div class="period-container">
+                        <span class="period">x 6 meses</span>
+                    </div>
+                </div>
+
+                <div class="maintenance-fee">AR$ 30.000 /mes mantenimiento</div>
+
+                <ul class="features">
+                    <li>Carga de productos</li>
+                    <li>Panel autoadministrable (Fácil uso)</li>
+                    <li>Pagos online o Integración con WhatsApp</li>
+                    <li>Carrito de compras</li>
+                    <li>Hosting incluido</li>
+                    <li>Certificado SSL (Sitio Seguro)</li>
+                    <li>Posicionamiento en Google (SEO)</li>
+                    <li>Actualizaciones técnicas</li>
+                    <li>Soporte Prioritario por WhatsApp</li>
+                    <li class="excluded">
+                        <div style="display:flex; flex-direction:column;">
+                            <span>Dominio .com.ar (No incluido)</span>
+                            <span class="info-precio">*Aprox. AR$ 8.500 en nic.ar</span>
+                        </div>
+                    </li>
+                </ul>
+                <button class="btn btn-primary" style="text-align: center; width:100%" onclick="consultarPlan('Sitio Corporativo (6 cuotas)')">Contratar Plan</button>
+            </div>
+
+            <div class="card reveal">
+                <h3>Sistemas a Medida</h3> 
+                <p>Soluciones complejas para necesidades específicas.</p>
+                
+                <span class="old-price">Consultoría y Análisis</span>
+                <div class="price-container">
+                    <span class="currency">AR$</span>
+                    <span class="big-number">Cotizar</span>
+                    <div class="period-container">
+                        <span class="period">a medida</span>
+                    </div>
+                </div>
+
+                <div class="maintenance-fee">Mantenimiento a medida</div>
+
+                <ul class="features">
+                    <li>Apps Web / Sistemas de Gestión</li>
+                    <li>Sistemas de Turnos y Reservas</li>
+                    <li>Paneles de Administración (Dashboards)</li>
+                    <li>Bases de Datos a medida</li>
+                    <li>Login y Perfiles de Usuario</li>
+                    <li>Integración con APIs externas</li>
+                </ul>
+                
+                <button class="btn" style="text-align: center; width:100%" onclick="consultarPlan('Proyecto a Medida')">Consultar</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contacto">
+    <div class="container">
+        <h2 class="section-title reveal">¿Tenés una duda específica?</h2>
+        <p class="section-subtitle reveal">Si preferís escribirme por correo, usá este formulario.</p>
+
+        <div class="contact-box reveal">
+            <form id="contactForm">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem; margin-bottom: 1rem;">
+                    <input type="text" name="nombre" placeholder="Tu Nombre" required>
+                    <input type="tel" name="telefono" placeholder="Tu Teléfono (Opcional)">
+                </div>
+                
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Tu Email" required>
+                </div>
+
+                <div class="form-group">
+                    <select name="interes">
+                        <option value="Consulta General">Tengo una consulta general</option>
+                        <option value="Empresa">Soy una empresa / agencia</option>
+                        <option value="Otro">Otro motivo</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <textarea name="mensaje" rows="4" placeholder="¿En qué te puedo ayudar?" required></textarea>
+                </div>
+
+                <button type="submit" id="submitBtn" class="btn btn-primary" style="width:100%; margin-top:0.5rem;">Enviar Mensaje 📩</button>
+                
+                <p id="formStatus" class="status-msg"></p>
+            </form>
+        </div>
+    </div>
+</section>
+
+<footer>
+    © 2025 Hostara — Desarrollado por Leonel Galazzo - Analista Universitario en Sistemas.
+</footer>
+
+<a href="https://wa.me/5493644539325" class="whatsapp-btn" target="_blank">
+    <svg class="whatsapp-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.637 3.891 1.685 5.405l-.634 2.37 2.438-.641zm11.233-5.356c-.072-.124-.265-.198-.554-.342-.293-.145-1.724-.861-1.997-1.006-.273-.145-.472-.217-.671.082-.2.299-.769.967-.942 1.166-.174.199-.347.223-.64.075-.294-.15-1.242-.458-2.368-1.462-.867-.775-1.453-1.732-1.623-2.028-.174-.298-.018-.459.129-.606.133-.132.296-.347.444-.52.149-.174.199-.297.299-.497.098-.199.049-.373-.025-.521-.075-.148-.671-1.615-.919-2.213-.242-.578-.487-.5-.671-.509-.174-.008-.372-.01-.571-.01-.198 0-.52.075-.792.373-.273.298-1.042 1.018-1.042 2.477 0 1.46 1.063 2.875 1.211 3.074.15.199 2.094 3.197 5.071 4.482.709.306 1.261.489 1.693.626.713.226 1.362.194 1.874.118.572-.086 1.725-.705 1.969-1.385.244-.681.244-1.265.172-1.385z"/>
+    </svg>
+</a>
+
+<div id="project-modal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span id="modal-title">Cargando Proyecto...</span>
+            <button class="close-btn" onclick="closeModal()">Cerrar (ESC)</button>
+        </div>
+        <iframe id="project-iframe" class="modal-iframe" src="" allowfullscreen></iframe>
+    </div>
+</div>
+
+<script>
+// --- CONFIGURACIÓN GOOGLE SHEETS ---
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwTeMcEtJU71eclWWOk3HBhnwiihtdfPIVbgXu_pFxnnTqGBYN7MSJngBSL2iXKl8ZK/exec"; 
+
+// 1. Animación Reveal
+const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('active'); observer.unobserve(e.target); } });
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// 2. Funcionalidad: Clic en Plan -> WhatsApp
+function consultarPlan(plan) {
+    const telefono = "5493644539325"; // Tu número
+    const mensaje = `Hola Hostara, estoy interesado en el plan: *${plan}*. ¿Me podrías dar más información?`;
+    const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, '_blank');
+}
+
+// 3. Funcionalidad: Formulario -> Google Sheets
+const form = document.getElementById('contactForm');
+const statusMsg = document.getElementById('formStatus');
+const submitBtn = document.getElementById('submitBtn');
+
+form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Enviando...";
+
+    fetch(SCRIPT_URL, { method: 'POST', body: new FormData(form) })
+    .then(response => {
+        statusMsg.innerText = "¡Mensaje enviado! Te responderé pronto.";
+        statusMsg.className = "status-msg success";
+        statusMsg.style.display = "block";
+        form.reset();
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Enviar Mensaje 📩";
+        
+        // Ocultar mensaje después de 5 segundos
+        setTimeout(() => {
+            statusMsg.style.display = "none";
+        }, 5000);
+    })
+    .catch(error => {
+        statusMsg.innerText = "Hubo un error. Por favor intenta por WhatsApp.";
+        statusMsg.className = "status-msg error";
+        statusMsg.style.display = "block";
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Enviar Mensaje 📩";
+    });
+});
+
+// 4. Funcionalidad del Modal
+const modal = document.getElementById('project-modal');
+const iframe = document.getElementById('project-iframe');
+const modalTitle = document.getElementById('modal-title');
+
+function openModal(url, title = 'Demo de Proyecto') {
+    document.body.style.overflow = 'hidden'; 
+    modalTitle.textContent = title;
+    iframe.src = url;
+    modal.style.display = 'flex';
+}
+
+function closeModal() {
+    document.body.style.overflow = '';
+    modal.style.display = 'none';
+    iframe.src = ''; 
+}
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.style.display === 'flex') closeModal();
+});
+
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+});
+
+// 5. Funcionalidad Scroll Top
+const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+window.onscroll = function() {
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        scrollTopBtn.classList.add("visible");
+    } else {
+        scrollTopBtn.classList.remove("visible");
+    }
+};
+
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>
