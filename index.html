@@ -476,9 +476,140 @@ input:focus, textarea:focus, select:focus {
 select option { background: #020612; color: white; }
 
 /* ---------------- FOOTER ---------------- */
+/* ---------------- FOOTER ---------------- */
 footer {
-    padding:2rem 0; text-align:center; border-top:1px solid var(--glass-border);
-    color:var(--text-muted); font-size:.9rem; margin-top: 2rem;
+    margin-top: 4rem;
+    border-top: 1px solid var(--glass-border);
+    position: relative;
+    overflow: hidden;
+}
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), var(--primary), transparent);
+}
+.footer-main {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 3rem;
+    padding: 3.5rem 0 2.5rem;
+}
+.footer-brand p {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    margin: 0.8rem 0 1.5rem;
+    max-width: 260px;
+}
+.footer-logo {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: white;
+    letter-spacing: -0.5px;
+}
+.footer-logo span { color: var(--secondary); }
+.footer-social {
+    display: flex;
+    gap: 0.6rem;
+}
+.footer-social a {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass);
+    display: flex; align-items: center; justify-content: center;
+    transition: 0.3s;
+    text-decoration: none;
+}
+.footer-social a:hover {
+    border-color: var(--secondary);
+    background: rgba(252,176,0,0.1);
+}
+.footer-social a svg {
+    width: 16px; height: 16px;
+    stroke: var(--text-muted);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: 0.3s;
+}
+.footer-social a:hover svg { stroke: var(--secondary); }
+.footer-col h5 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    margin-bottom: 1.2rem;
+}
+.footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+.footer-col ul li a {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.footer-col ul li a::before {
+    content: '';
+    width: 0;
+    height: 1px;
+    background: var(--secondary);
+    transition: width 0.2s;
+    display: inline-block;
+}
+.footer-col ul li a:hover { color: white; }
+.footer-col ul li a:hover::before { width: 12px; }
+.footer-bottom {
+    border-top: 1px solid var(--glass-border);
+    padding: 1.4rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.footer-bottom p {
+    color: var(--text-muted);
+    font-size: 0.82rem;
+}
+.footer-bottom p strong { color: white; }
+.footer-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 5px 12px;
+}
+.footer-badge span {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 6px #22c55e;
+    animation: pulse-dot 2s infinite;
+}
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+@media (max-width: 768px) {
+    .footer-main { grid-template-columns: 1fr; gap: 2rem; padding: 2.5rem 0 2rem; }
+    .footer-brand p { max-width: 100%; }
+    .footer-bottom { flex-direction: column; text-align: center; }
 }
 
 /* ---------------- ANIMACIONES ---------------- */
@@ -821,7 +952,59 @@ footer {
 </section>
 
 <footer>
-    © 2025 Hostara — Desarrollo de Sistemas.
+    <div class="container">
+        <div class="footer-main">
+
+            <!-- Marca -->
+            <div class="footer-brand footer-col">
+                <div class="footer-logo">Hos<span>tara</span></div>
+                <p>Desarrollo web profesional para negocios que quieren crecer. Sistemas reales, resultados reales.</p>
+                <div class="footer-social">
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/hostara.dev/" target="_blank" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                    </a>
+                    <!-- WhatsApp -->
+                    <a href="https://wa.me/5493644539325" target="_blank" aria-label="WhatsApp">
+                        <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    </a>
+               
+                    
+                </div>
+            </div>
+
+            <!-- Navegación -->
+            <div class="footer-col">
+                <h5>Navegación</h5>
+                <ul>
+                    <li><a href="#trabajos">Proyectos</a></li>
+                    <li><a href="#precios">Precios</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                    <li><a href="https://wa.me/5493644539325" target="_blank">WhatsApp directo</a></li>
+                </ul>
+            </div>
+
+            <!-- Servicios -->
+            <div class="footer-col">
+                <h5>Servicios</h5>
+                <ul>
+                    <li><a href="#precios">Landing Page</a></li>
+                    <li><a href="#precios">Tienda Online</a></li>
+                    <li><a href="#precios">Sitio Corporativo</a></li>
+                    <li><a href="#precios">Sistemas a Medida</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 <strong>Hostara</strong> — Todos los derechos reservados.</p>
+            <div class="footer-badge">
+                <span></span>
+                Disponible para nuevos proyectos
+            </div>
+        </div>
+    </div>
 </footer>
 
 <a href="https://wa.me/5493644539325" class="whatsapp-btn" target="_blank">
