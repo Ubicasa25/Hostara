@@ -401,25 +401,9 @@ section { padding: 4rem 0; }
     box-shadow:0 10px 30px rgba(252, 176, 0, 0.15);
 }
 .card h3 { font-size: 1.3rem; color: white; margin-bottom: 0.3rem; }
-.card > p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; height: 35px; line-height: 1.3; }
+.card > p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; height: 35px; line-height: 1.3; }
 
-.old-price {
-    text-decoration: line-through; color: var(--text-muted); font-size: 0.85rem;
-    margin-bottom: -5px; display: block;
-}
-.price-container {
-    display: flex; align-items: flex-start; gap: 4px; margin: 0.5rem 0 0.5rem 0;
-}
-.currency { font-size: 1.1rem; font-weight: 600; margin-top: 6px; color: var(--secondary); }
-.big-number { font-size: 2.8rem; font-weight: 800; line-height: 1; color: white; }
-.period-container { display: flex; flex-direction: column; justify-content: center; margin-top: 5px; }
-.period { font-size: 0.9rem; color: var(--text-muted); font-weight: 400; }
 
-.maintenance-fee {
-    font-size: 0.85rem; color: var(--secondary); font-weight: 600;
-    margin-bottom: 1rem; display: flex; align-items: center; gap: 5px;
-}
-.maintenance-fee::before { content: "+"; }
 
 .promo-badge {
     position: absolute; top: 15px; right: 15px;
@@ -457,23 +441,6 @@ section { padding: 4rem 0; }
     padding:2rem; line-height:1.6; font-style: italic; color: #e5e7eb;
 }
 .testimonial strong { display: block; margin-top: 1rem; color: var(--secondary); font-style: normal; font-size: 0.9rem; }
-
-/* ---------------- CONTACTO (Mejorado) ---------------- */
-.contact-box {
-    background:var(--glass); border:1px solid var(--glass-border);
-    padding:2rem; border-radius:24px; max-width:700px; margin:auto;
-}
-.form-group { margin-bottom: 1rem; }
-input, textarea, select {
-    width: 100%; padding: 0.8rem; background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px;
-    color: white; font-family: inherit; font-size: 0.95rem; transition: 0.3s; outline: none;
-}
-input:focus, textarea:focus, select:focus {
-    border-color: var(--primary); background: rgba(0, 69, 203, 0.1);
-    box-shadow: 0 0 15px var(--primary-glow);
-}
-select option { background: #020612; color: white; }
 
 /* ---------------- FOOTER ---------------- */
 /* ---------------- FOOTER ---------------- */
@@ -612,6 +579,112 @@ footer::before {
     .footer-bottom { flex-direction: column; text-align: center; }
 }
 
+/* ---------------- SELECTOR CONTACTO ---------------- */
+.selector-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.2rem;
+}
+
+.selector-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 1.8rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-family: 'Outfit', sans-serif;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.selector-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(252,176,0,0.06), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.selector-card:hover {
+    border-color: var(--secondary);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(252, 176, 0, 0.12);
+}
+
+.selector-card:hover::before { opacity: 1; }
+
+.selector-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(252, 176, 0, 0.1);
+    border: 1px solid rgba(252, 176, 0, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.4rem;
+    transition: 0.3s;
+}
+
+.selector-icon svg {
+    width: 22px;
+    height: 22px;
+    stroke: var(--secondary);
+    transition: 0.3s;
+}
+
+.selector-card:hover .selector-icon {
+    background: rgba(252, 176, 0, 0.18);
+}
+
+.selector-card h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.selector-card p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.4;
+    flex-grow: 1;
+}
+
+.selector-cta {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 0.4rem;
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: all 0.3s;
+}
+
+.selector-cta::after {
+    content: '→';
+    font-size: 1rem;
+}
+
+.selector-card:hover .selector-cta {
+    opacity: 1;
+    transform: translateX(0);
+}
+
 /* ---------------- ANIMACIONES ---------------- */
 .reveal { opacity:0; transform:translateY(60px); transition:all .8s ease-out; }
 .reveal.active { opacity:1; transform:translateY(0); }
@@ -710,6 +783,26 @@ footer::before {
                 <div class="project-info">
                     <h3>Subí tu foto - Mas que Burgers</h3>
                     <span>subitufoto.vercel.app</span>
+                </div>
+            </div>
+
+              <div class="project-card reveal" onclick="openModal('https://www.masqueburgers.com.ar/', 'Puntos Mqb')">
+                <div class="project-image">
+                    <img src="puntos.png" alt="Mas que Burgers Puntos">
+                </div>
+                <div class="project-info">
+                    <h3>Puntos - Mas que Burgers</h3>
+                    <span>masqueburgers.com.ar</span>
+                </div>
+            </div>
+
+              <div class="project-card reveal" onclick="openModal('https://polifonia.vercel.app/', 'polifonia.')">
+                <div class="project-image">
+                    <img src="polifonia.png" alt="Mas que Burgers Menú">
+                </div>
+                <div class="project-info">
+                    <h3>polifonia.</h3>
+                    <span>polifonia.vercel.app</span>
                 </div>
             </div>
 
@@ -815,23 +908,14 @@ footer::before {
 <section id="precios">
     <div class="container">
         <h2 class="section-title reveal">Planes Flexibles</h2>
-        <p class="section-subtitle reveal">Financiación en 6 pagos fijos + Mantenimiento accesible.</p>
+        <p class="section-subtitle reveal">Elegí el plan que mejor se adapte a tu negocio.</p>
 
         <div class="grid">
             <div class="card reveal">
                 <h3>Landing Page</h3>
                 <p>Ideal para validar ideas o captar leads rápido.</p>
                 
-                <span class="old-price">AR$ 180.000 total</span>
-                <div class="price-container">
-                    <span class="currency">AR$</span>
-                    <span class="big-number">25.000</span>
-                    <div class="period-container">
-                        <span class="period">x 6 meses</span>
-                    </div>
-                </div>
-                
-                <div class="maintenance-fee">AR$ 10.000 /mes mantenimiento</div>
+
 
                 <ul class="features">
                     <li>Diseño One-Page Moderno</li>
@@ -857,16 +941,7 @@ footer::before {
                 <h3>Ideal para Emprendedores</h3>
                 <p>Para negocios que necesitan nuevas teconologías.</p>
                 
-                <span class="old-price">AR$ 330.000 total</span>
-                <div class="price-container">
-                    <span class="currency">AR$</span>
-                    <span class="big-number">55.000</span>
-                    <div class="period-container">
-                        <span class="period">x 6 meses</span>
-                    </div>
-                </div>
 
-                <div class="maintenance-fee">AR$ 30.000 /mes mantenimiento</div>
 
                 <ul class="features">
                     <li>Carga de productos</li>
@@ -892,16 +967,7 @@ footer::before {
                 <h3>Sistemas a Medida</h3> 
                 <p>Soluciones complejas para necesidades específicas.</p>
                 
-                <span class="old-price">Consultoría y Análisis</span>
-                <div class="price-container">
-                    <span class="currency">AR$</span>
-                    <span class="big-number">Cotizar</span>
-                    <div class="period-container">
-                        <span class="period">a medida</span>
-                    </div>
-                </div>
 
-                <div class="maintenance-fee">Mantenimiento a medida</div>
 
                 <ul class="features">
                     <li>Apps Web / Sistemas de Gestión</li>
@@ -917,36 +983,87 @@ footer::before {
 
 <section id="contacto">
     <div class="container">
-        <h2 class="section-title reveal">¿Tenés una duda específica?</h2>
-        <p class="section-subtitle reveal">Si preferís escribirme por correo, usá este formulario.</p>
+        <h2 class="section-title reveal">¿En qué te puedo ayudar?</h2>
+        <p class="section-subtitle reveal">Elegí lo que mejor describe tu situación y serás dirigido a mi WhatsApp</p>
 
-        <div class="contact-box reveal">
-            <form id="contactForm">
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem; margin-bottom: 1rem;">
-                    <input type="text" name="nombre" placeholder="Tu Nombre" required>
-                    <input type="tel" name="telefono" placeholder="Tu Teléfono (Opcional)">
-                </div>
-                
-                <div class="form-group">
-                    <input type="email" name="email" placeholder="Tu Email" required>
-                </div>
+        <div class="selector-grid reveal">
 
-                <div class="form-group">
-                    <select name="interes">
-                        <option value="Consulta General">Tengo una consulta general</option>
-                        <option value="Empresa">Soy una empresa / agencia</option>
-                        <option value="Otro">Otro motivo</option>
-                    </select>
+            <button class="selector-card" onclick="contactarWhatsApp('landing')">
+                <div class="selector-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="3"/>
+                        <path d="M3 9h18"/>
+                        <path d="M9 21V9"/>
+                    </svg>
                 </div>
+                <h4>Quiero una Landing Page</h4>
+                <p>Página de presentación para mi negocio o emprendimiento.</p>
+                <span class="selector-cta">Consultar por WhatsApp</span>
+            </button>
 
-                <div class="form-group">
-                    <textarea name="mensaje" rows="4" placeholder="¿En qué te puedo ayudar?" required></textarea>
+            <button class="selector-card" onclick="contactarWhatsApp('tienda')">
+                <div class="selector-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                        <line x1="3" y1="6" x2="21" y2="6"/>
+                        <path d="M16 10a4 4 0 0 1-8 0"/>
+                    </svg>
                 </div>
+                <h4>Necesito una Tienda Online</h4>
+                <p>Vender mis productos con carrito, pagos y panel de gestión.</p>
+                <span class="selector-cta">Consultar por WhatsApp</span>
+            </button>
 
-                <button type="submit" id="submitBtn" class="btn btn-primary" style="width:100%; margin-top:0.5rem;">Enviar Mensaje 📩</button>
-                
-                <p id="formStatus" class="status-msg"></p>
-            </form>
+            <button class="selector-card" onclick="contactarWhatsApp('sistema')">
+                <div class="selector-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2"/>
+                        <path d="M8 21h8M12 17v4"/>
+                        <path d="M7 8h2M11 8h6M7 11h4M15 11h2"/>
+                    </svg>
+                </div>
+                <h4>Quiero un Sistema a Medida</h4>
+                <p>App web, panel de administración o sistema de gestión propio.</p>
+                <span class="selector-cta">Consultar por WhatsApp</span>
+            </button>
+
+            <button class="selector-card" onclick="contactarWhatsApp('menu')">
+                <div class="selector-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 8C8 10 5.9 16.17 3.82 19.34"/>
+                        <path d="M12 5c0 0 0 9-8 11"/>
+                        <path d="M22 2c0 0-4 2-6 8-2-1-4-1-5 0 1-5 5-8 11-8z"/>
+                    </svg>
+                </div>
+                <h4>Menú Digital para Gastronomía</h4>
+                <p>Carta digital con QR para restaurantes, bares o cafeterías.</p>
+                <span class="selector-cta">Consultar por WhatsApp</span>
+            </button>
+
+            <button class="selector-card" onclick="contactarWhatsApp('mantenimiento')">
+                <div class="selector-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                    </svg>
+                </div>
+                <h4>Tengo un sitio y necesito ayuda</h4>
+                <p>Mantenimiento, cambios o mejoras en un sitio ya existente.</p>
+                <span class="selector-cta">Consultar por WhatsApp</span>
+            </button>
+
+            <button class="selector-card" onclick="contactarWhatsApp('otro')">
+                <div class="selector-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                        <line x1="12" y1="17" x2="12.01" y2="17" stroke-width="3"/>
+                    </svg>
+                </div>
+                <h4>Tengo otra consulta</h4>
+                <p>No sé bien qué necesito, pero me gustaría hablar con alguien.</p>
+                <span class="selector-cta">Consultar por WhatsApp</span>
+            </button>
+
         </div>
     </div>
 </section>
@@ -1028,9 +1145,6 @@ footer::before {
 </div>
 
 <script>
-// --- CONFIGURACIÓN GOOGLE SHEETS ---
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwTeMcEtJU71eclWWOk3HBhnwiihtdfPIVbgXu_pFxnnTqGBYN7MSJngBSL2iXKl8ZK/exec"; 
-
 // 1. Animación Reveal
 const observer = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('active'); observer.unobserve(e.target); } });
@@ -1045,39 +1159,20 @@ function consultarPlan(plan) {
     window.open(url, '_blank');
 }
 
-// 3. Funcionalidad: Formulario -> Google Sheets
-const form = document.getElementById('contactForm');
-const statusMsg = document.getElementById('formStatus');
-const submitBtn = document.getElementById('submitBtn');
-
-form.addEventListener('submit', e => {
-    e.preventDefault();
-
-    submitBtn.disabled = true;
-    submitBtn.innerText = "Enviando...";
-
-    fetch(SCRIPT_URL, { method: 'POST', body: new FormData(form) })
-    .then(response => {
-        statusMsg.innerText = "¡Mensaje enviado! Te responderé pronto.";
-        statusMsg.className = "status-msg success";
-        statusMsg.style.display = "block";
-        form.reset();
-        submitBtn.disabled = false;
-        submitBtn.innerText = "Enviar Mensaje 📩";
-        
-        // Ocultar mensaje después de 5 segundos
-        setTimeout(() => {
-            statusMsg.style.display = "none";
-        }, 5000);
-    })
-    .catch(error => {
-        statusMsg.innerText = "Hubo un error. Por favor intenta por WhatsApp.";
-        statusMsg.className = "status-msg error";
-        statusMsg.style.display = "block";
-        submitBtn.disabled = false;
-        submitBtn.innerText = "Enviar Mensaje 📩";
-    });
-});
+// 3. Funcionalidad: Selector de interés → WhatsApp
+function contactarWhatsApp(tipo) {
+    const telefono = "5493644539325";
+    const mensajes = {
+        landing:        "Hola Hostara! Me interesa una *Landing Page* para mi negocio. ¿Me podés dar más información?",
+        tienda:         "Hola Hostara! Necesito una *Tienda Online* con carrito y panel de gestión. ¿Me podés contar más?",
+        sistema:        "Hola Hostara! Estoy buscando un *Sistema a Medida* (app web / panel de administración). ¿Podemos hablar?",
+        menu:           "Hola Hostara! Me interesa un *Menú Digital con QR* para mi local gastronómico. ¿Me mandás más info?",
+        mantenimiento:  "Hola Hostara! Tengo un sitio web existente y necesito *ayuda con mantenimiento o cambios*. ¿Podés ayudarme?",
+        otro:           "Hola Hostara! Quiero hacer una consulta sobre desarrollo web. ¿Tenés un momento para hablar?"
+    };
+    const mensaje = mensajes[tipo] || mensajes.otro;
+    window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`, '_blank');
+}
 
 // 4. Funcionalidad del Modal
 const modal = document.getElementById('project-modal');
